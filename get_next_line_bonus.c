@@ -6,13 +6,13 @@
 /*   By: zaleksan <zaleksan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:51:37 by zaleksan          #+#    #+#             */
-/*   Updated: 2025/02/25 15:53:42 by zaleksan         ###   ########.fr       */
+/*   Updated: 2025/02/27 20:28:29 by zaleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-static char	*set_line(char	*buffer)
+static char	*set_line(char *buffer)
 {
 	ssize_t	i;
 	char	*line;
@@ -40,7 +40,7 @@ static char	*set_line(char	*buffer)
 	return (line);
 }
 
-static char	*set_stash(char	*buffer)
+static char	*set_stash(char *buffer)
 {
 	ssize_t	i;
 	ssize_t	j;
@@ -52,10 +52,7 @@ static char	*set_stash(char	*buffer)
 	while (buffer[i] && buffer[i] != '\n')
 		i++;
 	if (!buffer[i])
-	{
-		free(buffer);
-		return (NULL);
-	}
+		return (free(buffer), NULL);
 	stash = (char *)malloc((ft_strlen(buffer) - i) * sizeof(char));
 	if (!stash)
 		return (NULL);
@@ -81,6 +78,7 @@ char	*read_file(int fd, char *buffer)
 		if (bytesread == -1)
 		{
 			free(line_buffer);
+			free(buffer);
 			return (NULL);
 		}
 		line_buffer[bytesread] = '\0';
@@ -97,9 +95,10 @@ char	*read_file(int fd, char *buffer)
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	*buffer[OPEN_MAX];
+	static char	*buffer[OPEN_MAX] = {NULL};
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	line = NULL;
+	if ((fd != 0 && fd <= 2) || BUFFER_SIZE <= 0)
 		return (0);
 	buffer[fd] = read_file(fd, buffer[fd]);
 	if (!buffer[fd])
@@ -109,6 +108,8 @@ char	*get_next_line(int fd)
 	if (line && !line[0])
 	{
 		free(line);
+		free(buffer[fd]);
+		buffer[fd] = NULL;
 		return (NULL);
 	}
 	return (line);

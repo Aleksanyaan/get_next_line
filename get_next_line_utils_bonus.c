@@ -6,7 +6,7 @@
 /*   By: zaleksan <zaleksan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 18:58:27 by zaleksan          #+#    #+#             */
-/*   Updated: 2025/02/25 15:50:16 by zaleksan         ###   ########.fr       */
+/*   Updated: 2025/02/27 20:28:42 by zaleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ char	*ft_strchr(const char *s, int c)
 	size_t			i;
 
 	i = 0;
+	if (!s)
+		return (NULL);
 	while (s[i] != '\0')
 	{
 		if (s[i] == (unsigned char)c)
@@ -50,7 +52,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	j = 0;
 	res = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!res)
-		return (NULL);
+		return (free(s1), NULL);
 	while (s1 && s1[i] != 0)
 	{
 		res[i] = s1[i];
