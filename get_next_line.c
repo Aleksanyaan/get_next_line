@@ -6,7 +6,7 @@
 /*   By: zaleksan <zaleksan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 20:02:38 by zaleksan          #+#    #+#             */
-/*   Updated: 2025/02/27 20:34:49 by zaleksan         ###   ########.fr       */
+/*   Updated: 2025/02/28 11:46:25 by zaleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static char	*set_line(char *buffer)
 {
-	ssize_t	i;
+	int		i;
 	char	*line;
 
 	i = 0;
@@ -42,8 +42,8 @@ static char	*set_line(char *buffer)
 
 static char	*set_stash(char *buffer)
 {
-	ssize_t	i;
-	ssize_t	j;
+	int		i;
+	int		j;
 	char	*stash;
 
 	i = 0;
@@ -66,8 +66,8 @@ static char	*set_stash(char *buffer)
 
 char	*read_file(int fd, char *buffer)
 {
-	char	*line_buffer;
-	int		bytesread;
+	char		*line_buffer;
+	ssize_t		bytesread;
 
 	line_buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!line_buffer)
